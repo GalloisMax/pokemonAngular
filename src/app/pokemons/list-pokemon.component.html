@@ -1,0 +1,50 @@
+<div class='container'>
+    <div class="row">
+        <div class="row">
+            <div class="col s12 m6 offset-m5">
+                <a class="waves-effect waves-teal btn-flat" href='#' (click)="getAuthServiceLogout()">Déconnexion</a>
+            </div>
+        </div>
+
+        <pokemon-search></pokemon-search>
+
+        <select id="selectBorderColor" style="display: block" (change)="onEditBorderColor($event)">
+            <option>Selectionner la couleur de bordure</option>
+            <option value="red">Rouge</option>
+            <option value="blue">Bleu</option>
+            <option value="yellow">Jaune</option>
+            <option value="purple">Violet</option>
+            <option value="green">Vert</option>
+        </select>
+
+        <div class="row">
+            <div class="col s12 m6 offset-m3 center ">
+                <a class="waves-effect waves-light btn-large green" (click)="createPokemon()">Créer un pokémon</a>
+            </div>
+            <div class="row">
+                <div class="col s12 m6 offset-m3 center ">
+
+                </div>
+            </div>
+            <div class="col s12 m6 offset-m3 center ">
+                <a class="waves-effect waves-light btn-large blue" (click)="explorePokedex()">Pokédex</a>
+            </div>
+        </div>
+
+        <div *ngFor="let pokemon of pokemons | paginate: {itemsPerPage: 6, currentPage: p }" class="col s6 m4">
+            <div class="card horizontal" (click)="selectPokemon(pokemon)" pkmnBorderCard={{colorBorderValue}}>
+                <div class="card-image">
+                    <img [src]="pokemon.picture">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>{{ pokemon.name }}</p>
+                        <p><small>{{ pokemon.created | date:"dd/MM/yyyy"}}</small></p>
+                        <span *ngFor="let type of pokemon.types" class='{{type | pokemonTypeColor }}'>{{type}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+</div>

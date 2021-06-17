@@ -1,0 +1,38 @@
+<div class='container'>
+    <div class="row">
+        <div class="row">
+            <div class="col s12 m6 offset-m5">
+                <a class="waves-effect waves-teal btn-flat" href='#' (click)="getAuthServiceLogout()">Déconnexion</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 m6 offset-m5">
+                <a class="waves-effect waves-light btn-large" (click)="goBack()">Retour</a>
+            </div>
+        </div>
+
+
+        <h1>POKEDEX en construction</h1>
+
+        <!-- 
+        <div *ngFor="let pokemon of pokemons | paginate: {itemsPerPage: 6, currentPage: p }" class="col s6 m4">
+            <div class="card horizontal" (click)="selectPokemon(pokemon)" pkmnBorderCard={{colorBorderValue}}>
+                <div class="card-image">
+                    <img [src]="pokemon.picture">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>{{ pokemon.name }}</p>
+                        <p><small>{{ pokemon.created | date:"dd/MM/yyyy"}}</small></p>
+                        <span *ngFor="let type of pokemon.types" class='{{type | pokemonTypeColor }}'>{{type}}</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+
+        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+    </div>
+</div>
