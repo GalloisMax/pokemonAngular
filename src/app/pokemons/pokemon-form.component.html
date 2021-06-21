@@ -57,6 +57,8 @@
                 <div class="section center">
                     <button type="submit" class="waves-effect waves-light btn" [disabled]="!pokemonForm.form.valid">
                         Valider</button>
+                    <button type="button" class="waves-effect waves-light btn red" (click)="this.goDetail(pokemon)">
+                        Retour</button>
                 </div>
 
             </div>

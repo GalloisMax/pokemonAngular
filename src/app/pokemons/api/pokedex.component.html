@@ -12,27 +12,40 @@
             </div>
         </div>
 
+        <div>
+            <div
+                *ngFor="let pokemon of pokemons | paginate: { itemsPerPage: 10, currentPage: page, totalItems: totalPokemons}">
 
-        <h1>POKEDEX en construction</h1>
-
-        <!-- 
-        <div *ngFor="let pokemon of pokemons | paginate: {itemsPerPage: 6, currentPage: p }" class="col s6 m4">
-            <div class="card horizontal" (click)="selectPokemon(pokemon)" pkmnBorderCard={{colorBorderValue}}>
-                <div class="card-image">
-                    <img [src]="pokemon.picture">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>{{ pokemon.name }}</p>
-                        <p><small>{{ pokemon.created | date:"dd/MM/yyyy"}}</small></p>
-                        <span *ngFor="let type of pokemon.types" class='{{type | pokemonTypeColor }}'>{{type}}</span>
+                <div class="card horizontal" style="margin-left: 25%; margin-right: 25%;">
+                    <div class="card-image">
+                        <img [src]="pokemon.sprites.front_default">
+                        <button class="waves-effect waves-light green btn"
+                            (click)="captured(pokemon.name, pokemon.types[0].type.name, pokemon.stats[0].base_stat, pokemon.stats[1].base_stat, pokemon.sprites.front_default)">Capturer</button>
                     </div>
+                    <div class="row">
+
+                        <div class="col s4">
+                            <h5>{{ pokemon.name }}</h5>
+                            <p><b>Type : </b>{{pokemon.types[0].type.name}}</p>
+                        </div>
+                        <div class="col s3">
+
+                        </div>
+                        <div class="col s5">
+                            <p><b>Health : </b>{{ pokemon.stats[0].base_stat}}</p>
+                            <p><b>Attack Power : </b>{{ pokemon.stats[1].base_stat}}</p>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
-        </div> -->
-
-
-
-        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+            <h4 *ngIf='pokemons.length === 0' class="center">
+                <pkmn-loader> </pkmn-loader>
+            </h4>
+            <div style="margin-left: 25%;">
+                <pagination-controls (pageChange)="page = $event; pokemons = []; getPokemons()"></pagination-controls>
+            </div>
+        </div>
     </div>
 </div>

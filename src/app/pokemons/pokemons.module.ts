@@ -14,7 +14,6 @@ import { PokemonTypeColorPipe } from './pokemon-type-color-pipe';
 import { FormsModule } from '@angular/forms';
 import { EditPokemonComponent } from './edit-pokemon.component';
 import { PokemonFormComponent } from './pokemon-form.component';
-import { PokemonSearchComponent } from './search-pokemon.component';
 import { LoaderComponent } from '../loader.component';
 import { CreatePokemonComponent } from './create-pokemon.component';
 import { PokemonCreateFormComponent } from './pokemon-create-form.component';
@@ -31,7 +30,6 @@ import { PokedexComponent } from './api/pokedex.component';
     declarations: [
         ListPokemonComponent,
         PokedexComponent,
-        PokemonSearchComponent,
         DetailPokemonComponent,
         EditPokemonComponent,
         CreatePokemonComponent,

@@ -1,21 +1,24 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+
 
 // import { Observable, of } from 'rxjs';
 // import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
-    public httpParams: HttpParams = new HttpParams();
 
     constructor(private http: HttpClient) {
-        this.httpParams = this.httpParams.set('limit', 10);
     }
 
-    getApiPokemons() {
-        return this.http.get(`https://pokeapi.co/api/v1/pokemon`, { params: this.httpParams }).pipe(map((res: any) => { return res }));
+    getApiPokemons(limit: number, offset: number) {
+        return this.http.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     }
+
+    getMoreData(name: string) {
+        return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+    }
+
 
     // getApiPokemons(): Observable<any> {
     //     return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?limit=10`).pipe(tap(() => console.log('fetched pokemons')),

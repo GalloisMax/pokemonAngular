@@ -6,17 +6,6 @@
             </div>
         </div>
 
-        <pokemon-search></pokemon-search>
-
-        <select id="selectBorderColor" style="display: block" (change)="onEditBorderColor($event)">
-            <option>Selectionner la couleur de bordure</option>
-            <option value="red">Rouge</option>
-            <option value="blue">Bleu</option>
-            <option value="yellow">Jaune</option>
-            <option value="purple">Violet</option>
-            <option value="green">Vert</option>
-        </select>
-
         <div class="row">
             <div class="col s12 m6 offset-m3 center ">
                 <a class="waves-effect waves-light btn-large green" (click)="createPokemon()">Créer un pokémon</a>
@@ -45,6 +34,6 @@
                 </div>
             </div>
         </div>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>

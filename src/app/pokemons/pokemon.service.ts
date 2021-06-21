@@ -10,13 +10,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 @Injectable()
 export class PokemonsService {
 
+    private pokemonsUrl = 'api/pokemons';
 
+    pokemons: Pokemon[] = [];
 
     constructor(private http: HttpClient) {
 
     }
 
-    private pokemonsUrl = 'api/pokemons';
 
     private log(log: string) { console.info(log); }
 
@@ -30,58 +31,55 @@ export class PokemonsService {
     }
 
 
-    searchPokemons(term: string): Observable<Pokemon[]> {
-        if (!term.trim()) {
-            return of([])
-        }
-
-        return this.http.get<Pokemon[]>(`${this.pokemonsUrl}/?name=${term}`).pipe(
-            tap(_ => this.log(`found pokemons matching "${term}"`)),
-            catchError(this.handleError<Pokemon[]>('searchPokemons', []))
-        );
-    }
 
     updatePokemon(pokemon: Pokemon): Observable<any> {
-        const httpOptions = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        };
-        return this.http.put(this.pokemonsUrl, pokemon, httpOptions).pipe(
-            tap(_ => this.log(`updated pokemon id=${pokemon.id}`)),
-            catchError(this.handleError<any>('updatedPokemon', [])));
+
+        return this.http.put(`https://pokemonangular-default-rtdb.europe-west1.firebasedatabase.app/pokemons/${pokemon.firebaseId}.json`, pokemon)
     }
 
+    // createPokemon(pokemon: Pokemon): Observable<any> {
+    //     const httpOptions = {
+    //         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    //     };
+    //     return this.http.post(this.pokemonsUrl, pokemon, httpOptions).pipe(
+    //         tap(_ => this.log(`create pokemon id=${pokemon.id}`)),
+    //         catchError(this.handleError<any>('createdPokemon', [])));
+    // }
+
     createPokemon(pokemon: Pokemon): Observable<any> {
-        const httpOptions = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        };
-        return this.http.post(this.pokemonsUrl, pokemon, httpOptions).pipe(
-            tap(_ => this.log(`create pokemon id=${pokemon.id}`)),
-            catchError(this.handleError<any>('createdPokemon', [])));
+        return this.http.post('https://pokemonangular-default-rtdb.europe-west1.firebasedatabase.app/pokemons.json', pokemon);
     }
 
     // Retourne tous les pokémons
+    // getPokemons(): Observable<Pokemon[]> {
+    //     return this.http.get<Pokemon[]>(this.pokemonsUrl).pipe(tap(_ => this.log('fetched pokemons')),
+    //         catchError(this.handleError('getPokemons', [])));
+    // }
+
     getPokemons(): Observable<Pokemon[]> {
-        return this.http.get<Pokemon[]>(this.pokemonsUrl).pipe(tap(_ => this.log('fetched pokemons')),
-            catchError(this.handleError('getPokemons', [])));
+        return this.http.get<any>('https://pokemonangular-default-rtdb.europe-west1.firebasedatabase.app/pokemons.json')
+
+    }
+
+    traitmentPokemonsLocal(pokemons: any) {
+        var arrayPokemon: any[] = []
+        for (let pokemon in pokemons) {
+            var newPokemon: Pokemon = pokemons[pokemon]
+
+            arrayPokemon.push({ ...newPokemon, firebaseId: pokemon })
+        }
+        return this.pokemons = arrayPokemon
     }
 
     // Retourne le pokémon avec l'identifiant passé en paramètre
     getPokemon(id: number): Observable<Pokemon> {
-        const url = `${this.pokemonsUrl}/${id}`;
-        return this.http.get<Pokemon>(url).pipe(tap(_ => this.log(`fetched pokemon id=${id}`)),
-            catchError(this.handleError<Pokemon>(`getPokemon id=${id}`)));
+        const pokemon = this.pokemons.find(x => x.id === id)
+        return this.http.get<Pokemon>(`https://pokemonangular-default-rtdb.europe-west1.firebasedatabase.app/pokemons/${pokemon?.firebaseId}.json`);
     }
 
-    deletePokemon(pokemonId: number): Observable<Pokemon> {
-        const url = `${this.pokemonsUrl}/${pokemonId}`;
-        const httpOptions = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        };
-
-        return this.http.delete<Pokemon>(url, httpOptions).pipe(
-            tap(_ => this.log(`deleted pokemon id=${pokemonId}`)),
-            catchError(this.handleError<Pokemon>('deletePokemon'))
-        );
+    deletePokemon(id: number): Observable<Pokemon> {
+        const pokemon = this.pokemons.find(x => x.id === id)
+        return this.http.delete<Pokemon>(`https://pokemonangular-default-rtdb.europe-west1.firebasedatabase.app/pokemons/${pokemon?.firebaseId}.json`);
     }
 
     getPokemonTypes(): string[] {

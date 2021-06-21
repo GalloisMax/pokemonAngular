@@ -13,11 +13,9 @@ import { Pokemon } from './pokemon';
 })
 export class ListPokemonComponent implements OnInit {
     p: number = 1;
-    pokemons: Pokemon[] = [];
+    pokemons: any = [];
     colorBorderValue: string = "";
     constructor(private router: Router, private pokemonsService: PokemonsService, private authService: AuthService) {
-
-
     }
 
     getAuthServiceLogout() {
@@ -25,8 +23,21 @@ export class ListPokemonComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.pokemonsService.getPokemons().subscribe(pokemons => this.pokemons = pokemons)
+        this.pokemonsService.getPokemons().subscribe(pokemons => this.traitmentPokemons(pokemons) &&
+            this.pokemonsService.traitmentPokemonsLocal(pokemons))
 
+    }
+
+    traitmentPokemons(pokemons: any) {
+        var arrayPokemon: any[] = []
+        for (let pokemon in pokemons) {
+            var newPokemon: Pokemon = pokemons[pokemon]
+
+            arrayPokemon.push({ ...newPokemon, firebaseId: pokemon })
+        }
+
+
+        return this.pokemons = arrayPokemon
     }
 
     selectPokemon(pokemon: Pokemon) {

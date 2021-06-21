@@ -59,6 +59,9 @@ export class PokemonFormComponent implements OnInit {
         this.pokemonsService.updatePokemon(this.pokemon).subscribe(() => this.goBack())
     }
 
+    goDetail(pokemon: Pokemon) {
+        this.router.navigate(['/pokemon', pokemon.id]);
+    }
     goBack() {
         let link = ['/pokemon', this.pokemon.id];
         this.router.navigate(link);

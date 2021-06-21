@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-router.module';
 import { PokemonsModule } from './pokemons/pokemons.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
@@ -22,7 +20,6 @@ import { PageNotFoundComponent } from './page-not-found.component';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
     PokemonsModule,
     LoginRoutingModule,
     AppRoutingModule
